@@ -16,11 +16,10 @@ coverage](https://codecov.io/gh/paulgovan/ReliaPlotR/graph/badge.svg)](https://a
 
 <!-- badges: end -->
 
-Build interactive Weibull Probability Plots with `WeibullR`, an R
-package for Weibull analysis, and `plotly`, an interactive web-based
-graphing library.
+Build interactive Reliability Probability Plots with `plotly`, an
+interactive web-based graphing library.
 
-# Getting Started
+## Getting Started
 
 To install `ReliaPlotR` in R:
 
@@ -34,14 +33,14 @@ Or install the development version:
 devtools::install_github("paulgovan/ReliaPlotR")
 ```
 
-# Basic Examples
+## Basic Examples
 
 To build a probability plot, first fit a `wblr` object using the
 `WeibullR` package and then use `plotly_wblr` to build the plot.
 
 ``` r
 library(WeibullR)
-library(WeibullR.plotly)
+library(ReliaPlotR)
 failures <- c(30, 49, 82, 90, 96)
 obj <- wblr.conf(wblr.fit(wblr(failures)))
 plotly_wblr(obj)
@@ -60,9 +59,9 @@ plotly_contour(obj)
 
 ![](ReadMe_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
-# Customization
+## Customization
 
-ReliaPlotR has several customization options.
+`ReliaPlotR` has several customization options.
 
 ``` r
 plotly_wblr(obj, main = "Weibull Probability Plot", xlab = "Years", ylab = "Failure Probability", confCol = "blue", signif = 4, grid = FALSE)
