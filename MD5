@@ -1,4 +1,4 @@
-3239ad5b02a5be747fa0b25a2404d59e *DESCRIPTION
+57542b11edb0d1f765ba11a20c867fd2 *DESCRIPTION
 0ec75d678d29e36c067be89905bd023a *NAMESPACE
 5252df3d49c1aef7158dcc273b8f419f *NEWS.md
 df6cc46bc7fae1a55b713f3d5065b35a *R/ReliaPlotR-package.R
@@ -7,7 +7,7 @@ f3945d5b2ae149b484889d9173bca449 *R/plotly_duane.R
 f224f9e1850362e814dfd56fe75cf7ec *R/plotly_rga.R
 b4e2f62c20a8d8a005b79b871de9f1d8 *R/plotly_wblr.R
 f7012c922b5aa746b0e1aae365be9345 *README.md
-ef9614f32efc4293db303ce2a845dfab *inst/CITATION
+f86ac12fb2d3d2dad8b4f4384240087b *inst/CITATION
 71ab1d84fc7858bbfc5672a22fe9415b *inst/WORDLIST
 7e6a488dfb093e4028dcc8db3853e67f *man/ReliaPlotR-package.Rd
 0970552f7df07a16113cc0cba0d7f3b4 *man/figures/unnamed-chunk-2-1.png
