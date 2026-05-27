@@ -64,7 +64,7 @@ test_that("plotly_nhpp respects the showGrid parameter", {
 test_that("plotly_nhpp includes hover text for data points", {
   plot <- plotly_nhpp(mock_nhpp_obj)
   hover_data <- plot$x$data[[1]]$text
-  expect_true(all(grepl("Events: \\(", hover_data)))
+  expect_true(all(grepl("MCF: \\(", hover_data)))
 })
 
 test_that("plotly_nhpp respects showConf = FALSE", {

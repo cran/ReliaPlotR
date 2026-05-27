@@ -1,13 +1,13 @@
-67d3da0ef3d53bcf76c734e1e25c9f32 *DESCRIPTION
+ac1c77dfee7a1d64298f3dc4b7a42722 *DESCRIPTION
 03528876729cd181308faafa8f03adf6 *NAMESPACE
-944b2316c151d6aca52723060b8ac9dc *NEWS.md
+632c4b02f37fba65a66fe5ce717891fa *NEWS.md
 df6cc46bc7fae1a55b713f3d5065b35a *R/ReliaPlotR-package.R
 72e0bae9342a735d3e64bd8a3bb28863 *R/plotly_alt.R
 df4120238900fa24145b73171f0931cb *R/plotly_contour.R
 9967759a7f1f51913191b3ed77510aa6 *R/plotly_duane.R
 783891854cf7af50b72e1227dd471978 *R/plotly_exposure.R
 4d6b7f4423697e2bf168ef191c12efc2 *R/plotly_mcf.R
-73e856bc539aceeb1dbb542ccde3280f *R/plotly_nhpp.R
+62cee36f32e806c7d210944852e8fe92 *R/plotly_nhpp.R
 c83e6c99b50634ae6f49ba0b11e51b9e *R/plotly_rel.R
 9c8cabc593eddcc8c87f0d4afc8fdcf6 *R/plotly_rga.R
 3b3551287dc220179e9d238511cf1c5e *R/plotly_wblr.R
@@ -24,7 +24,7 @@ f04f753e007a0b6c29885e8ef87f4f8c *man/figures/unnamed-chunk-5-1.png
 d6e6442643e22e3c7b7972fdf64150e9 *man/plotly_duane.Rd
 fe17635c1befb70c967b004497b620c5 *man/plotly_exposure.Rd
 62122a1e5a63e99723686fdf8ef46676 *man/plotly_mcf.Rd
-5c065623c3edc34eb8fe8404430dd689 *man/plotly_nhpp.Rd
+fcfd002dd1385f65237079f3876ffc3a *man/plotly_nhpp.Rd
 27dbbcc507849da73cbc2717961d5377 *man/plotly_rel.Rd
 627f61023fe34f967cd0cf3c0e5ff405 *man/plotly_rga.Rd
 9f2d136221ab6e83fd770cf5c3849db3 *man/plotly_wblr.Rd
@@ -35,7 +35,7 @@ fe17635c1befb70c967b004497b620c5 *man/plotly_exposure.Rd
 b2a34928b0ef66e9e1fe3325139d9853 *tests/testthat/test-duane.R
 03b44484c8d2a02139a1dca9f475bb93 *tests/testthat/test-exposure.R
 9c5097e8e98b166857d631f0db85151c *tests/testthat/test-mcf.R
-06ffd77154a988ed38cb34c979b6667e *tests/testthat/test-nhpp.R
+796cf9d274751c5ba82e98ce12c4b9a3 *tests/testthat/test-nhpp.R
 5c34e9b25fe61e6b848cf806867392d5 *tests/testthat/test-rel.R
 0afe6cf0f77d5e1b1a3beaff622270ff *tests/testthat/test-rga.R
 3f03d0be345a2143f52b87312d870298 *tests/testthat/test-wblr.R
