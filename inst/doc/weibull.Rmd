@@ -1,0 +1,138 @@
+---
+title: "Life Data Analysis"
+output:
+  rmarkdown::html_vignette:
+    fig_width: 7
+    fig_height: 5
+    self_contained: false
+bibliography: ../inst/REFERENCES.bib
+vignette: >
+  %\VignetteIndexEntry{weibull}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+To run a Weibull Analysis, start by loading `WeibullR` and `ReliaPlotR`
+
+```{r setup}
+library(WeibullR)
+library(ReliaPlotR)
+```
+
+## Statistical Background
+
+The two-parameter Weibull distribution has CDF
+
+$$F(t) = 1 - \exp\!\left[-\left(\frac{t}{\eta}\right)^{\!\beta}\right], \quad t > 0,$$
+
+where $\beta > 0$ is the shape (slope on probability paper) and $\eta > 0$ is the scale (characteristic life, the time at which 63.2% of units have failed). A shape $\beta < 1$ indicates infant-mortality failure (decreasing hazard rate); $\beta = 1$ reduces to the exponential distribution (constant hazard); $\beta > 1$ indicates wearout (increasing hazard). The three-parameter extension adds a location parameter $\gamma$ (failure-free period): $F(t) = 1 - \exp[-((t - \gamma)/\eta)^\beta]$.
+
+For the lognormal distribution, $\ln(T) \sim \mathcal{N}(\mu_{\log}, \sigma_{\log}^2)$; the probability paper transformation uses the standard normal quantile $\Phi^{-1}(F)$.
+
+**Fitting methods.** Rank regression (default in WeibullR, `method.fit = "rr-xony"`) linearizes the CDF on probability paper and minimizes squared deviations. Maximum likelihood estimation (`method.fit = "mle"`) maximizes the log-likelihood and is preferred for heavily censored data. Goodness-of-fit is reported as R² for rank regression and log-likelihood for MLE [@MeekerEscobar1998].
+
+**Confidence intervals.** The Fisher matrix method (`method.conf = "fm"`) approximates confidence bounds via the asymptotic normal distribution of MLE estimates. Likelihood ratio bounds (`method.conf = "lrb"`) invert a chi-squared test and are generally more accurate for small samples [@MeekerEscobar1998].
+
+## A Basic Example
+
+Next, create some failure data for 5 different machines that fail at time 30, 49, 82, 90, and 96 respectively. 
+
+```{r echo=TRUE}
+failures <- c(30, 49, 82, 90, 96)
+```
+
+Then use the `WeibullR` package to fit a Weibull distribution to the data, and the `plotly_wblr()` function to create a probability plot.
+
+```{r echo=TRUE}
+obj <- wblr.conf(wblr.fit(wblr(failures)))
+plotly_wblr(obj)
+```
+
+## Right Censored Model
+
+Let's add right censored data to the previous example. In addition to the 5 machines that failed, add suspensions for 3 machines that did not fail (right censored) at times 100, 45, and 10 respectively.
+
+```{r echo=TRUE}
+suspensions <- c(100, 45, 10)
+obj <- wblr.conf(wblr.fit(wblr(failures, suspensions)))
+plotly_wblr(obj, suspensions, fitCol = "blue", confCol = "blue")
+```
+
+## Interval Censored Model
+
+To create an interval censored model, let's use the inspection data from Silkworth, 2020.
+
+```{r echo=TRUE}
+inspection_data <- data.frame(
+  left = c(0, 6.12, 19.92, 29.64, 35.4, 39.72, 45.32, 52.32),
+  right = c(6.12, 19.92, 29.64, 35.4, 39.72, 45.32, 52.32, 63.48),
+  qty = c(5, 16, 12, 18, 18, 2, 6, 17)
+)
+```
+
+Then add suspension data for units surviving until the last inspection date.
+
+```{r echo=TRUE}
+suspensions <- data.frame(time = 63.48, event = 0, qty = 73)
+```
+
+Finally, add a fit and plot the results.
+
+```{r echo=TRUE, warning=FALSE}
+obj <- wblr(suspensions, interval = inspection_data)
+obj <- wblr.fit(obj, method.fit = "mle")
+obj <- wblr.conf(obj, method.conf = "fm", lty = 2)
+suspensions <- as.vector(suspensions$time)
+plotly_wblr(obj,
+  susp = suspensions, fitCol = "red", confCol = "red", intCol = "blue",
+  main = "Parts Cracking Inspection Interval Analysis",
+  ylab = "Cumulative % Cracked", xlab = "Inspection Time"
+)
+```
+
+## 3-Parameter Weibull Model
+
+To fit a 3P Weibull, let's create some new failure data and plot the results.
+
+```{r echo=TRUE}
+failures <- c(25, 30, 42, 49, 55, 67, 73, 82, 90, 96, 101, 110, 120, 132, 145)
+fit <- wblr.conf(wblr.fit(wblr(failures), dist = "weibull3p"))
+plotly_wblr(fit, fitCol = "darkgreen", confCol = "darkgreen")
+```
+
+## Contour Plots
+
+To build a contour plot, let's rerun the first example and use the `plotly_contour()` function to create a plot.
+
+```{r echo=TRUE}
+failures <- c(30, 49, 82, 90, 96)
+obj <- wblr.conf(wblr.fit(wblr(failures), method.fit = "mle"), method.conf = "lrb")
+plotly_contour(obj, col = "blue")
+```
+
+## Overlay Models
+
+Multiple `wblr` models can be overlaid on the same probability plot by passing a list of objects. All objects must use the same distribution family. Each model is rendered in a distinct color, and clicking a legend entry toggles all traces for that model.
+
+```{r echo=TRUE}
+failures1 <- c(30, 49, 82, 90, 96)
+failures2 <- c(20, 40, 60, 80, 100)
+obj1 <- wblr.conf(wblr.fit(wblr(failures1), method.fit = "mle"), method.conf = "lrb")
+obj2 <- wblr.conf(wblr.fit(wblr(failures2), method.fit = "mle"), method.conf = "lrb")
+plotly_wblr(list(obj1, obj2), cols = c("steelblue", "tomato"))
+```
+
+## References
+
+## See Also
+
+- [Accelerated Life Testing](alt.html) — apply Weibull/lognormal models across multiple stress levels
+- [Reliability Growth Analysis](rga.html) — track cumulative failures over development test time
+- [Repairable Systems Analysis](repairable.html) — analyze recurrent events with MCF and NHPP models

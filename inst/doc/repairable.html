@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Repairable Systems Analysis</title>
+
+<script src="repairable_files/header-attrs-2.30/header-attrs.js"></script>
+<link href="repairable_files/htmltools-fill-0.5.9/fill.css" rel="stylesheet" />
+<script src="repairable_files/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="repairable_files/plotly-binding-4.12.0/plotly.js"></script>
+<script src="repairable_files/typedarray-0.1/typedarray.min.js"></script>
+<script src="repairable_files/jquery-3.5.1/jquery.min.js"></script>
+<link href="repairable_files/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet" />
+<script src="repairable_files/crosstalk-1.2.2/js/crosstalk.min.js"></script>
+<link href="repairable_files/plotly-htmlwidgets-css-2.25.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="repairable_files/plotly-main-2.25.2/plotly-latest.min.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/rmarkdown/rmarkdown/templates/html_vignette/resources/vignette.css" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Repairable Systems Analysis</h1>
+
+
+
+<p>To run a repairable systems analysis, start by loading
+<code>ReliaGrowR</code> and <code>ReliaPlotR</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(ReliaGrowR)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(ReliaPlotR)</span></code></pre></div>
+<div id="statistical-background" class="section level2">
+<h2>Statistical Background</h2>
+<p><strong>Repairable systems</strong> experience multiple failure
+events over their lifetime. Standard survival analysis (Kaplan-Meier,
+Weibull) applies to the <em>first</em> failure; repairable-systems
+methods model the entire <em>recurrence</em> process <span
+class="citation">(Nelson 2003)</span>.</p>
+<p>The <strong>Mean Cumulative Function (MCF)</strong>, <span
+class="math inline">\(M(t) = E[N(t)]\)</span>, is the expected
+cumulative number of repairs per system by time <span
+class="math inline">\(t\)</span>. The nonparametric Nelson-Aalen
+estimator</p>
+<p><span class="math display">\[\hat{M}(t) = \sum_{t_i \leq t}
+\frac{d_i}{r_i},\]</span></p>
+<p>where <span class="math inline">\(d_i\)</span> is the number of
+events at time <span class="math inline">\(t_i\)</span> and <span
+class="math inline">\(r_i\)</span> is the number of systems at risk
+(still under observation), provides an unbiased estimate that properly
+accounts for systems observed only up to a censoring time <span
+class="citation">(Nelson 2003)</span>. This differs fundamentally from
+the Kaplan-Meier estimator: Kaplan-Meier estimates survival to
+<em>first</em> event; MCF sums expected <em>recurrences</em> and can
+exceed 1.</p>
+<p>The <strong>NHPP Power Law</strong> (Crow-AMSAA) model fits a
+parametric intensity function <span class="math inline">\(\lambda(t) =
+\lambda \beta t^{\beta - 1}\)</span> to the recurrent process. It is the
+repairable-systems analog of the Crow-AMSAA model for development
+testing: <span class="math inline">\(\beta &lt; 1\)</span> indicates
+improving reliability; <span class="math inline">\(\beta &gt; 1\)</span>
+indicates deterioration; <span class="math inline">\(\beta = 1\)</span>
+is a homogeneous Poisson process <span class="citation">(Crow
+1974)</span>.</p>
+<p>The examples below use a fleet of five field units. Each row records
+which unit failed and when:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>id    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;U1&quot;</span>,<span class="st">&quot;U1&quot;</span>,<span class="st">&quot;U1&quot;</span>,<span class="st">&quot;U2&quot;</span>,<span class="st">&quot;U2&quot;</span>,<span class="st">&quot;U3&quot;</span>,<span class="st">&quot;U3&quot;</span>,<span class="st">&quot;U3&quot;</span>,<span class="st">&quot;U4&quot;</span>,<span class="st">&quot;U5&quot;</span>,<span class="st">&quot;U5&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>time  <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">120</span>, <span class="dv">310</span>, <span class="dv">560</span>, <span class="dv">200</span>, <span class="dv">480</span>, <span class="dv">95</span>, <span class="dv">280</span>, <span class="dv">430</span>, <span class="dv">370</span>, <span class="dv">150</span>, <span class="dv">490</span>)</span></code></pre></div>
+</div>
+<div id="mean-cumulative-function" class="section level2">
+<h2>Mean Cumulative Function</h2>
+<p>The Mean Cumulative Function (MCF) is a non-parametric estimate of
+the expected cumulative number of failures per system by time
+<em>t</em>. It is computed using the Nelson-Aalen estimator, which
+accounts for systems that are still operating (censored) at the end of
+the observation window.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>end_times <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">U1 =</span> <span class="dv">600</span>, <span class="at">U2 =</span> <span class="dv">600</span>, <span class="at">U3 =</span> <span class="dv">600</span>, <span class="at">U4 =</span> <span class="dv">600</span>, <span class="at">U5 =</span> <span class="dv">600</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>fit_mcf   <span class="ot">&lt;-</span> <span class="fu">mcf</span>(<span class="at">id =</span> id, <span class="at">time =</span> time, <span class="at">end_time =</span> end_times)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="fu">plotly_mcf</span>(fit_mcf)</span></code></pre></div>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-5bbbaaeaf2b8ef260a51" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-5bbbaaeaf2b8ef260a51">{"x":{"visdat":{"134c72eb77fdb":["function () ","plotlyVisDat"]},"cur_data":"134c72eb77fdb","attrs":{"134c72eb77fdb":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","x":[95,120,150,200,280,310,370,430,480,490,560],"y":[0.20000000000000001,0.40000000000000002,0.60000000000000009,0.80000000000000004,1,1.2,1.3999999999999999,1.5999999999999999,1.7999999999999998,1.9999999999999998,2.1999999999999997],"mode":"lines","line":{"color":"black","shape":"hv"},"showlegend":false,"legendgroup":"1","name":"MCF","text":["MCF: (95, 0.2)","MCF: (120, 0.4)","MCF: (150, 0.6)","MCF: (200, 0.8)","MCF: (280, 1)","MCF: (310, 1.2)","MCF: (370, 1.4)","MCF: (430, 1.6)","MCF: (480, 1.8)","MCF: (490, 2)","MCF: (560, 2.2)"],"hoverinfo":"text","inherit":true},"134c72eb77fdb.1":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","x":[95,120,150,200,280,310,370,430,480,490,560],"y":[0,0,0,0.016014406183978536,0.1234774594234187,0.23981766472893817,0.36288454365275458,0.49127694052025794,0.62402160927596761,0.76040993539087687,0.89990697213414195],"mode":"lines","line":{"color":"black","shape":"hv"},"showlegend":false,"legendgroup":"1","text":["Lower: (95, 0)","Lower: (120, 0)","Lower: (150, 0)","Lower: (200, 0.016)","Lower: (280, 0.123)","Lower: (310, 0.24)","Lower: (370, 0.363)","Lower: (430, 0.491)","Lower: (480, 0.624)","Lower: (490, 0.76)","Lower: (560, 0.9)"],"hoverinfo":"text","inherit":true},"134c72eb77fdb.2":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","x":[95,120,150,200,280,310,370,430,480,490,560],"y":[0.59199279690801077,0.95436152973987098,1.278951440445703,1.5839855938160214,1.8765225405765813,2.1601823352710618,2.4371154563472452,2.708723059479742,2.9759783907240323,3.2395900646091227,3.5000930278658577],"mode":"lines","fill":"tonexty","fillcolor":"rgba(0,0,0,0.2)","line":{"color":"black","shape":"hv"},"showlegend":false,"legendgroup":"1","text":["Upper: (95, 0.592)","Upper: (120, 0.954)","Upper: (150, 1.279)","Upper: (200, 1.584)","Upper: (280, 1.877)","Upper: (310, 2.16)","Upper: (370, 2.437)","Upper: (430, 2.709)","Upper: (480, 2.976)","Upper: (490, 3.24)","Upper: (560, 3.5)"],"hoverinfo":"text","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Mean Cumulative Function Plot","xaxis":{"domain":[0,1],"automargin":true,"title":"Time","showline":true,"mirror":"ticks","showgrid":true,"gridcolor":"lightgray"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Mean Cumulative Function","showline":true,"mirror":"ticks","showgrid":true,"gridcolor":"lightgray"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"type":"scatter","x":[95,120,150,200,280,310,370,430,480,490,560],"y":[0.20000000000000001,0.40000000000000002,0.60000000000000009,0.80000000000000004,1,1.2,1.3999999999999999,1.5999999999999999,1.7999999999999998,1.9999999999999998,2.1999999999999997],"mode":"lines","line":{"color":"black","shape":"hv"},"showlegend":false,"legendgroup":"1","name":"MCF","text":["MCF: (95, 0.2)","MCF: (120, 0.4)","MCF: (150, 0.6)","MCF: (200, 0.8)","MCF: (280, 1)","MCF: (310, 1.2)","MCF: (370, 1.4)","MCF: (430, 1.6)","MCF: (480, 1.8)","MCF: (490, 2)","MCF: (560, 2.2)"],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text"],"marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"type":"scatter","x":[95,120,150,200,280,310,370,430,480,490,560],"y":[0,0,0,0.016014406183978536,0.1234774594234187,0.23981766472893817,0.36288454365275458,0.49127694052025794,0.62402160927596761,0.76040993539087687,0.89990697213414195],"mode":"lines","line":{"color":"black","shape":"hv"},"showlegend":false,"legendgroup":"1","text":["Lower: (95, 0)","Lower: (120, 0)","Lower: (150, 0)","Lower: (200, 0.016)","Lower: (280, 0.123)","Lower: (310, 0.24)","Lower: (370, 0.363)","Lower: (430, 0.491)","Lower: (480, 0.624)","Lower: (490, 0.76)","Lower: (560, 0.9)"],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text"],"marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(0,0,0,0.2)","type":"scatter","x":[95,120,150,200,280,310,370,430,480,490,560],"y":[0.59199279690801077,0.95436152973987098,1.278951440445703,1.5839855938160214,1.8765225405765813,2.1601823352710618,2.4371154563472452,2.708723059479742,2.9759783907240323,3.2395900646091227,3.5000930278658577],"mode":"lines","fill":"tonexty","line":{"color":"black","shape":"hv"},"showlegend":false,"legendgroup":"1","text":["Upper: (95, 0.592)","Upper: (120, 0.954)","Upper: (150, 1.279)","Upper: (200, 1.584)","Upper: (280, 1.877)","Upper: (310, 2.16)","Upper: (370, 2.437)","Upper: (430, 2.709)","Upper: (480, 2.976)","Upper: (490, 3.24)","Upper: (560, 3.5)"],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text"],"name":"rgba(0,0,0,0.2)","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>The shaded band shows the pointwise confidence interval. Hover over
+the step function to read exact MCF values at each event time.</p>
+</div>
+<div id="exposure-analysis" class="section level2">
+<h2>Exposure Analysis</h2>
+<p>The exposure plot tracks the cumulative event rate — total failures
+divided by total system-time — over the observation period. A rising
+rate indicates a deteriorating fleet; a flat or falling rate indicates
+stability or improvement.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>fit_exp <span class="ot">&lt;-</span> <span class="fu">exposure</span>(<span class="at">id =</span> id, <span class="at">time =</span> time)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">plotly_exposure</span>(fit_exp)</span></code></pre></div>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-56938f705fb2cdd1d69c" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-56938f705fb2cdd1d69c">{"x":{"visdat":{"134c7c4c2df6":["function () ","plotlyVisDat"]},"cur_data":"134c7c4c2df6","attrs":{"134c7c4c2df6":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","x":[95,120,150,200,280,310,370,430,480,490,560],"y":[0.0021052631578947368,0.0033333333333333335,0.0040000000000000001,0.0040000000000000001,0.0035714285714285713,0.0038709677419354839,0.0037837837837837837,0.0038277511961722489,0.0040178571428571425,0.0044247787610619468,0.0047210300429184546],"mode":"lines","line":{"color":"black","shape":"hv"},"showlegend":false,"legendgroup":"1","name":"Event Rate","text":["Rate: (95, 0.002)","Rate: (120, 0.003)","Rate: (150, 0.004)","Rate: (200, 0.004)","Rate: (280, 0.004)","Rate: (310, 0.004)","Rate: (370, 0.004)","Rate: (430, 0.004)","Rate: (480, 0.004)","Rate: (490, 0.004)","Rate: (560, 0.005)"],"hoverinfo":"text","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Exposure Plot","xaxis":{"domain":[0,1],"automargin":true,"title":"Time","showline":true,"mirror":"ticks","showgrid":true,"gridcolor":"lightgray"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Event Rate","showline":true,"mirror":"ticks","showgrid":true,"gridcolor":"lightgray"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"type":"scatter","x":[95,120,150,200,280,310,370,430,480,490,560],"y":[0.0021052631578947368,0.0033333333333333335,0.0040000000000000001,0.0040000000000000001,0.0035714285714285713,0.0038709677419354839,0.0037837837837837837,0.0038277511961722489,0.0040178571428571425,0.0044247787610619468,0.0047210300429184546],"mode":"lines","line":{"color":"black","shape":"hv"},"showlegend":false,"legendgroup":"1","name":"Event Rate","text":["Rate: (95, 0.002)","Rate: (120, 0.003)","Rate: (150, 0.004)","Rate: (200, 0.004)","Rate: (280, 0.004)","Rate: (310, 0.004)","Rate: (370, 0.004)","Rate: (430, 0.004)","Rate: (480, 0.004)","Rate: (490, 0.004)","Rate: (560, 0.005)"],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text"],"marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="nhpp-power-law-model" class="section level2">
+<h2>NHPP — Power Law Model</h2>
+<p>The Non-Homogeneous Poisson Process (NHPP) fits a parametric model to
+the recurrent failure process. The Power Law model (also called the
+Crow-AMSAA model for repairable systems) describes how the failure
+intensity changes over time:</p>
+<p><span class="math display">\[\lambda(t) = \lambda \beta \, t^{\beta -
+1}\]</span></p>
+<p>A shape parameter <span class="math inline">\(\beta &lt; 1\)</span>
+indicates reliability improvement; <span class="math inline">\(\beta
+&gt; 1\)</span> indicates deterioration; <span
+class="math inline">\(\beta = 1\)</span> reduces to a homogeneous
+Poisson process.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>times  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">120</span>, <span class="dv">200</span>, <span class="dv">310</span>, <span class="dv">370</span>, <span class="dv">430</span>, <span class="dv">480</span>, <span class="dv">490</span>, <span class="dv">560</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>events <span class="ot">&lt;-</span> <span class="fu">c</span>(  <span class="dv">1</span>,   <span class="dv">1</span>,   <span class="dv">1</span>,   <span class="dv">1</span>,   <span class="dv">1</span>,   <span class="dv">1</span>,   <span class="dv">1</span>,   <span class="dv">1</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>fit_nhpp <span class="ot">&lt;-</span> <span class="fu">nhpp</span>(<span class="at">time =</span> times, <span class="at">event =</span> events, <span class="at">model_type =</span> <span class="st">&quot;Power Law&quot;</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="fu">plotly_nhpp</span>(fit_nhpp)</span></code></pre></div>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-5494c2130987d2a6deff" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-5494c2130987d2a6deff">{"x":{"visdat":{"134c73f990583":["function () ","plotlyVisDat"]},"cur_data":"134c73f990583","attrs":{"134c73f990583":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":[120,200,310,370,430,480,490,560],"y":[1,2,3,4,5,6,7,8],"type":"scatter","mode":"markers","marker":{"color":"black"},"showlegend":false,"legendgroup":"1","name":"MCF","text":["MCF: (120, 1)","MCF: (200, 2)","MCF: (310, 3)","MCF: (370, 4)","MCF: (430, 5)","MCF: (480, 6)","MCF: (490, 7)","MCF: (560, 8)"],"hoverinfo":"text","inherit":true},"134c73f990583.1":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","x":[120,200,310,370,430,480,490,560],"y":[1.2673193966924514,2.3382836191373162,3.954734151856516,4.8893766830406111,5.8548066926946438,6.6802888069291226,6.8475100509736375,8.0365342751168942],"mode":"markers+lines","marker":{"color":"transparent"},"line":{"color":"black"},"showlegend":false,"legendgroup":"1","name":"Fit","text":["Fit: (120, 1.267)","Fit: (200, 2.338)","Fit: (310, 3.955)","Fit: (370, 4.889)","Fit: (430, 5.855)","Fit: (480, 6.68)","Fit: (490, 6.848)","Fit: (560, 8.037)"],"hoverinfo":"text","inherit":true},"134c73f990583.2":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","x":[120,200,310,370,430,480,490,560],"y":[2.5170665070720535,4.4888327022503267,7.5753121891825579,9.4254588910435917,11.383894318193304,13.094173212292253,13.444455615994489,15.970403614585765],"mode":"markers+lines","marker":{"color":"transparent"},"line":{"color":"black"},"showlegend":false,"legendgroup":"1","text":["Upper: (120, 2.517)","Upper: (200, 4.489)","Upper: (310, 7.575)","Upper: (370, 9.425)","Upper: (430, 11.384)","Upper: (480, 13.094)","Upper: (490, 13.444)","Upper: (560, 15.97)"],"hoverinfo":"text","inherit":true},"134c73f990583.3":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","x":[120,200,310,370,430,480,490,560],"y":[0.63808343908290022,1.2180383289368126,2.0645911113991939,2.5363225944762799,3.0111630036866202,3.4081005207789143,3.4875635903325968,4.044098365563058],"mode":"markers+lines","fill":"tonexty","fillcolor":"rgba(0,0,0,0.2)","marker":{"color":"transparent"},"line":{"color":"black"},"showlegend":false,"legendgroup":"1","text":["Lower: (120, 0.638)","Lower: (200, 1.218)","Lower: (310, 2.065)","Lower: (370, 2.536)","Lower: (430, 3.011)","Lower: (480, 3.408)","Lower: (490, 3.488)","Lower: (560, 4.044)"],"hoverinfo":"text","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"NHPP Plot","xaxis":{"domain":[0,1],"automargin":true,"title":"Cumulative Time","showline":true,"mirror":"ticks","showgrid":true,"gridcolor":"lightgray"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Mean Cumulative Function","showline":true,"mirror":"ticks","showgrid":true,"gridcolor":"lightgray"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[120,200,310,370,430,480,490,560],"y":[1,2,3,4,5,6,7,8],"type":"scatter","mode":"markers","marker":{"color":"black","line":{"color":"rgba(31,119,180,1)"}},"showlegend":false,"legendgroup":"1","name":"MCF","text":["MCF: (120, 1)","MCF: (200, 2)","MCF: (310, 3)","MCF: (370, 4)","MCF: (430, 5)","MCF: (480, 6)","MCF: (490, 7)","MCF: (560, 8)"],"hoverinfo":["text","text","text","text","text","text","text","text"],"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"type":"scatter","x":[120,200,310,370,430,480,490,560],"y":[1.2673193966924514,2.3382836191373162,3.954734151856516,4.8893766830406111,5.8548066926946438,6.6802888069291226,6.8475100509736375,8.0365342751168942],"mode":"markers+lines","marker":{"color":"transparent","line":{"color":"rgba(255,127,14,1)"}},"line":{"color":"black"},"showlegend":false,"legendgroup":"1","name":"Fit","text":["Fit: (120, 1.267)","Fit: (200, 2.338)","Fit: (310, 3.955)","Fit: (370, 4.889)","Fit: (430, 5.855)","Fit: (480, 6.68)","Fit: (490, 6.848)","Fit: (560, 8.037)"],"hoverinfo":["text","text","text","text","text","text","text","text"],"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"xaxis":"x","yaxis":"y","frame":null},{"type":"scatter","x":[120,200,310,370,430,480,490,560],"y":[2.5170665070720535,4.4888327022503267,7.5753121891825579,9.4254588910435917,11.383894318193304,13.094173212292253,13.444455615994489,15.970403614585765],"mode":"markers+lines","marker":{"color":"transparent","line":{"color":"rgba(44,160,44,1)"}},"line":{"color":"black"},"showlegend":false,"legendgroup":"1","text":["Upper: (120, 2.517)","Upper: (200, 4.489)","Upper: (310, 7.575)","Upper: (370, 9.425)","Upper: (430, 11.384)","Upper: (480, 13.094)","Upper: (490, 13.444)","Upper: (560, 15.97)"],"hoverinfo":["text","text","text","text","text","text","text","text"],"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(0,0,0,0.2)","type":"scatter","x":[120,200,310,370,430,480,490,560],"y":[0.63808343908290022,1.2180383289368126,2.0645911113991939,2.5363225944762799,3.0111630036866202,3.4081005207789143,3.4875635903325968,4.044098365563058],"mode":"markers+lines","fill":"tonexty","marker":{"color":"transparent","line":{"color":"rgba(214,39,40,1)"}},"line":{"color":"black"},"showlegend":false,"legendgroup":"1","text":["Lower: (120, 0.638)","Lower: (200, 1.218)","Lower: (310, 2.065)","Lower: (370, 2.536)","Lower: (430, 3.011)","Lower: (480, 3.408)","Lower: (490, 3.488)","Lower: (560, 4.044)"],"hoverinfo":["text","text","text","text","text","text","text","text"],"name":"rgba(0,0,0,0.2)","error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="nhpp-piecewise-model" class="section level2">
+<h2>NHPP — Piecewise Model</h2>
+<p>When a corrective action or design change is introduced mid-program,
+the failure process may shift. A piecewise NHPP fits separate Power Law
+segments on either side of a specified breakpoint, shown as a vertical
+dotted line:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># Dense failures before the design change (t &lt; 500), sparse afterwards</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>times2  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">65</span>, <span class="dv">105</span>, <span class="dv">150</span>, <span class="dv">200</span>, <span class="dv">255</span>, <span class="dv">315</span>, <span class="dv">380</span>, <span class="dv">450</span>, <span class="dv">800</span>, <span class="dv">1300</span>, <span class="dv">1950</span>, <span class="dv">2800</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>events2 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">13</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>fit_nhpp2 <span class="ot">&lt;-</span> <span class="fu">nhpp</span>(<span class="at">time =</span> times2, <span class="at">event =</span> events2, <span class="at">breaks =</span> <span class="dv">500</span>, <span class="at">method =</span> <span class="st">&quot;LS&quot;</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="fu">plotly_nhpp</span>(fit_nhpp2, <span class="at">fitCol =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">confCol =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">breakCol =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-6ebe3bc5a152768cc66f" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-6ebe3bc5a152768cc66f">{"x":{"visdat":{"134c7791cb6d4":["function () ","plotlyVisDat"]},"cur_data":"134c7791cb6d4","attrs":{"134c7791cb6d4":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":[30,65,105,150,200,255,315,380,450,800,1300,1950,2800],"y":[1,2,3,4,5,6,7,8,9,10,11,12,13],"type":"scatter","mode":"markers","marker":{"color":"black"},"showlegend":false,"legendgroup":"1","name":"MCF","text":["MCF: (30, 1)","MCF: (65, 2)","MCF: (105, 3)","MCF: (150, 4)","MCF: (200, 5)","MCF: (255, 6)","MCF: (315, 7)","MCF: (380, 8)","MCF: (450, 9)","MCF: (800, 10)","MCF: (1300, 11)","MCF: (1950, 12)","MCF: (2800, 13)"],"hoverinfo":"text","inherit":true},"134c7791cb6d4.1":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","x":[30,65,105,150,200,255,315,380,450,800,1300,1950,2800],"y":[1.0440100653573887,1.9631055030837206,2.9042973596821704,3.8864078823885859,4.9156950265230996,5.9945188146833841,7.1236491328532043,8.3031132038178708,8.9462728290794935,10.043451267944491,11.073312435667422,12.013866341954937,12.920351489096083],"mode":"markers+lines","marker":{"color":"transparent"},"line":{"color":"steelblue"},"showlegend":false,"legendgroup":"1","name":"Fit","text":["Fit: (30, 1.044)","Fit: (65, 1.963)","Fit: (105, 2.904)","Fit: (150, 3.886)","Fit: (200, 4.916)","Fit: (255, 5.995)","Fit: (315, 7.124)","Fit: (380, 8.303)","Fit: (450, 8.946)","Fit: (800, 10.043)","Fit: (1300, 11.073)","Fit: (1950, 12.014)","Fit: (2800, 12.92)"],"hoverinfo":"text","inherit":true},"134c7791cb6d4.2":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","x":[30,65,105,150,200,255,315,380,450,800,1300,1950,2800],"y":[1.0931788431455014,2.0219701592578017,2.9705845198581002,3.9689528445342517,5.0283358784364509,6.1506855309722903,7.3350899666397504,8.5803542693284012,9.3904816921003231,10.364519155123185,11.373298736698846,12.418013272736674,13.49645969546223],"mode":"markers+lines","marker":{"color":"transparent"},"line":{"color":"steelblue"},"showlegend":false,"legendgroup":"1","text":["Upper: (30, 1.093)","Upper: (65, 2.022)","Upper: (105, 2.971)","Upper: (150, 3.969)","Upper: (200, 5.028)","Upper: (255, 6.151)","Upper: (315, 7.335)","Upper: (380, 8.58)","Upper: (450, 9.39)","Upper: (800, 10.365)","Upper: (1300, 11.373)","Upper: (1950, 12.418)","Upper: (2800, 13.496)"],"hoverinfo":"text","inherit":true},"134c7791cb6d4.3":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","x":[30,65,105,150,200,255,315,380,450,800,1300,1950,2800],"y":[0.9970527909516691,1.9059545456655917,2.8394893655002784,3.8055796629311116,4.8055774669725704,5.8423171919037538,6.9183032790049666,8.0348301143993286,8.5230768938781445,9.7323292920651578,10.781238683395147,11.622872460543737,12.3688349662478],"mode":"markers+lines","fill":"tonexty","fillcolor":"rgba(70,130,180,0.2)","marker":{"color":"transparent"},"line":{"color":"steelblue"},"showlegend":false,"legendgroup":"1","text":["Lower: (30, 0.997)","Lower: (65, 1.906)","Lower: (105, 2.839)","Lower: (150, 3.806)","Lower: (200, 4.806)","Lower: (255, 5.842)","Lower: (315, 6.918)","Lower: (380, 8.035)","Lower: (450, 8.523)","Lower: (800, 9.732)","Lower: (1300, 10.781)","Lower: (1950, 11.623)","Lower: (2800, 12.369)"],"hoverinfo":"text","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"NHPP Plot","xaxis":{"domain":[0,1],"automargin":true,"title":"Cumulative Time","showline":true,"mirror":"ticks","showgrid":true,"gridcolor":"lightgray"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Mean Cumulative Function","showline":true,"mirror":"ticks","showgrid":true,"gridcolor":"lightgray"},"shapes":[{"type":"line","y0":0,"y1":1,"yref":"paper","x0":405.91298709953929,"x1":405.91298709953929,"line":{"color":"red","dash":"dot"}}],"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[30,65,105,150,200,255,315,380,450,800,1300,1950,2800],"y":[1,2,3,4,5,6,7,8,9,10,11,12,13],"type":"scatter","mode":"markers","marker":{"color":"black","line":{"color":"rgba(31,119,180,1)"}},"showlegend":false,"legendgroup":"1","name":"MCF","text":["MCF: (30, 1)","MCF: (65, 2)","MCF: (105, 3)","MCF: (150, 4)","MCF: (200, 5)","MCF: (255, 6)","MCF: (315, 7)","MCF: (380, 8)","MCF: (450, 9)","MCF: (800, 10)","MCF: (1300, 11)","MCF: (1950, 12)","MCF: (2800, 13)"],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text","text","text"],"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"type":"scatter","x":[30,65,105,150,200,255,315,380,450,800,1300,1950,2800],"y":[1.0440100653573887,1.9631055030837206,2.9042973596821704,3.8864078823885859,4.9156950265230996,5.9945188146833841,7.1236491328532043,8.3031132038178708,8.9462728290794935,10.043451267944491,11.073312435667422,12.013866341954937,12.920351489096083],"mode":"markers+lines","marker":{"color":"transparent","line":{"color":"rgba(255,127,14,1)"}},"line":{"color":"steelblue"},"showlegend":false,"legendgroup":"1","name":"Fit","text":["Fit: (30, 1.044)","Fit: (65, 1.963)","Fit: (105, 2.904)","Fit: (150, 3.886)","Fit: (200, 4.916)","Fit: (255, 5.995)","Fit: (315, 7.124)","Fit: (380, 8.303)","Fit: (450, 8.946)","Fit: (800, 10.043)","Fit: (1300, 11.073)","Fit: (1950, 12.014)","Fit: (2800, 12.92)"],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text","text","text"],"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"xaxis":"x","yaxis":"y","frame":null},{"type":"scatter","x":[30,65,105,150,200,255,315,380,450,800,1300,1950,2800],"y":[1.0931788431455014,2.0219701592578017,2.9705845198581002,3.9689528445342517,5.0283358784364509,6.1506855309722903,7.3350899666397504,8.5803542693284012,9.3904816921003231,10.364519155123185,11.373298736698846,12.418013272736674,13.49645969546223],"mode":"markers+lines","marker":{"color":"transparent","line":{"color":"rgba(44,160,44,1)"}},"line":{"color":"steelblue"},"showlegend":false,"legendgroup":"1","text":["Upper: (30, 1.093)","Upper: (65, 2.022)","Upper: (105, 2.971)","Upper: (150, 3.969)","Upper: (200, 5.028)","Upper: (255, 6.151)","Upper: (315, 7.335)","Upper: (380, 8.58)","Upper: (450, 9.39)","Upper: (800, 10.365)","Upper: (1300, 11.373)","Upper: (1950, 12.418)","Upper: (2800, 13.496)"],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text","text","text"],"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(70,130,180,0.2)","type":"scatter","x":[30,65,105,150,200,255,315,380,450,800,1300,1950,2800],"y":[0.9970527909516691,1.9059545456655917,2.8394893655002784,3.8055796629311116,4.8055774669725704,5.8423171919037538,6.9183032790049666,8.0348301143993286,8.5230768938781445,9.7323292920651578,10.781238683395147,11.622872460543737,12.3688349662478],"mode":"markers+lines","fill":"tonexty","marker":{"color":"transparent","line":{"color":"rgba(214,39,40,1)"}},"line":{"color":"steelblue"},"showlegend":false,"legendgroup":"1","text":["Lower: (30, 0.997)","Lower: (65, 1.906)","Lower: (105, 2.839)","Lower: (150, 3.806)","Lower: (200, 4.806)","Lower: (255, 5.842)","Lower: (315, 6.918)","Lower: (380, 8.035)","Lower: (450, 8.523)","Lower: (800, 9.732)","Lower: (1300, 10.781)","Lower: (1950, 11.623)","Lower: (2800, 12.369)"],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text","text","text"],"name":"rgba(70,130,180,0.2)","error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="overlay" class="section level2">
+<h2>Overlay</h2>
+<p>Multiple MCF or NHPP estimates can be overlaid on the same plot by
+passing a list of objects. This is useful for comparing two fleets, two
+time periods, or a before/after scenario.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>id2   <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;C&quot;</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>time2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">180</span>, <span class="dv">420</span>, <span class="dv">90</span>, <span class="dv">310</span>, <span class="dv">530</span>, <span class="dv">260</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>end2  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">A =</span> <span class="dv">600</span>, <span class="at">B =</span> <span class="dv">600</span>, <span class="at">C =</span> <span class="dv">600</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>fit_mcf2 <span class="ot">&lt;-</span> <span class="fu">mcf</span>(<span class="at">id =</span> id2, <span class="at">time =</span> time2, <span class="at">end_time =</span> end2)</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="fu">plotly_mcf</span>(<span class="fu">list</span>(fit_mcf, fit_mcf2), <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;tomato&quot;</span>))</span></code></pre></div>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-3cf44a648f6d051b129f" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-3cf44a648f6d051b129f">{"x":{"visdat":{"134c713cbd6d":["function () ","plotlyVisDat"]},"cur_data":"134c713cbd6d","attrs":{"134c713cbd6d":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","x":[95,120,150,200,280,310,370,430,480,490,560],"y":[0.20000000000000001,0.40000000000000002,0.60000000000000009,0.80000000000000004,1,1.2,1.3999999999999999,1.5999999999999999,1.7999999999999998,1.9999999999999998,2.1999999999999997],"mode":"lines","line":{"color":"steelblue","shape":"hv"},"showlegend":true,"legendgroup":"1","name":"MCF 1","text":["MCF: (95, 0.2)","MCF: (120, 0.4)","MCF: (150, 0.6)","MCF: (200, 0.8)","MCF: (280, 1)","MCF: (310, 1.2)","MCF: (370, 1.4)","MCF: (430, 1.6)","MCF: (480, 1.8)","MCF: (490, 2)","MCF: (560, 2.2)"],"hoverinfo":"text","inherit":true},"134c713cbd6d.1":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","x":[95,120,150,200,280,310,370,430,480,490,560],"y":[0,0,0,0.016014406183978536,0.1234774594234187,0.23981766472893817,0.36288454365275458,0.49127694052025794,0.62402160927596761,0.76040993539087687,0.89990697213414195],"mode":"lines","line":{"color":"steelblue","shape":"hv"},"showlegend":false,"legendgroup":"1","text":["Lower: (95, 0)","Lower: (120, 0)","Lower: (150, 0)","Lower: (200, 0.016)","Lower: (280, 0.123)","Lower: (310, 0.24)","Lower: (370, 0.363)","Lower: (430, 0.491)","Lower: (480, 0.624)","Lower: (490, 0.76)","Lower: (560, 0.9)"],"hoverinfo":"text","inherit":true},"134c713cbd6d.2":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","x":[95,120,150,200,280,310,370,430,480,490,560],"y":[0.59199279690801077,0.95436152973987098,1.278951440445703,1.5839855938160214,1.8765225405765813,2.1601823352710618,2.4371154563472452,2.708723059479742,2.9759783907240323,3.2395900646091227,3.5000930278658577],"mode":"lines","fill":"tonexty","fillcolor":"rgba(70,130,180,0.2)","line":{"color":"steelblue","shape":"hv"},"showlegend":false,"legendgroup":"1","text":["Upper: (95, 0.592)","Upper: (120, 0.954)","Upper: (150, 1.279)","Upper: (200, 1.584)","Upper: (280, 1.877)","Upper: (310, 2.16)","Upper: (370, 2.437)","Upper: (430, 2.709)","Upper: (480, 2.976)","Upper: (490, 3.24)","Upper: (560, 3.5)"],"hoverinfo":"text","inherit":true},"134c713cbd6d.3":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","x":[90,180,260,310,420,530],"y":[0.33333333333333331,0.66666666666666663,1,1.3333333333333333,1.6666666666666665,1.9999999999999998],"mode":"lines","line":{"color":"tomato","shape":"hv"},"showlegend":true,"legendgroup":"2","name":"MCF 2","text":["MCF: (90, 0.333)","MCF: (180, 0.667)","MCF: (260, 1)","MCF: (310, 1.333)","MCF: (420, 1.667)","MCF: (530, 2)"],"hoverinfo":"text","inherit":true},"134c713cbd6d.4":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","x":[90,180,260,310,420,530],"y":[0,0,0,0.026690676973297522,0.20579576570569769,0.39969610788156351],"mode":"lines","line":{"color":"tomato","shape":"hv"},"showlegend":false,"legendgroup":"2","text":["Lower: (90, 0)","Lower: (180, 0)","Lower: (260, 0)","Lower: (310, 0.027)","Lower: (420, 0.206)","Lower: (530, 0.4)"],"hoverinfo":"text","inherit":true},"134c713cbd6d.5":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","x":[90,180,260,310,420,530],"y":[0.98665466151335113,1.5906025495664515,2.1315857340761717,2.6399759896933688,3.1275375676276354,3.6003038921184363],"mode":"lines","fill":"tonexty","fillcolor":"rgba(255,99,71,0.2)","line":{"color":"tomato","shape":"hv"},"showlegend":false,"legendgroup":"2","text":["Upper: (90, 0.987)","Upper: (180, 1.591)","Upper: (260, 2.132)","Upper: (310, 2.64)","Upper: (420, 3.128)","Upper: (530, 3.6)"],"hoverinfo":"text","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Mean Cumulative Function Plot","xaxis":{"domain":[0,1],"automargin":true,"title":"Time","showline":true,"mirror":"ticks","showgrid":true,"gridcolor":"lightgray"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Mean Cumulative Function","showline":true,"mirror":"ticks","showgrid":true,"gridcolor":"lightgray"},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"type":"scatter","x":[95,120,150,200,280,310,370,430,480,490,560],"y":[0.20000000000000001,0.40000000000000002,0.60000000000000009,0.80000000000000004,1,1.2,1.3999999999999999,1.5999999999999999,1.7999999999999998,1.9999999999999998,2.1999999999999997],"mode":"lines","line":{"color":"steelblue","shape":"hv"},"showlegend":true,"legendgroup":"1","name":"MCF 1","text":["MCF: (95, 0.2)","MCF: (120, 0.4)","MCF: (150, 0.6)","MCF: (200, 0.8)","MCF: (280, 1)","MCF: (310, 1.2)","MCF: (370, 1.4)","MCF: (430, 1.6)","MCF: (480, 1.8)","MCF: (490, 2)","MCF: (560, 2.2)"],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text"],"marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"type":"scatter","x":[95,120,150,200,280,310,370,430,480,490,560],"y":[0,0,0,0.016014406183978536,0.1234774594234187,0.23981766472893817,0.36288454365275458,0.49127694052025794,0.62402160927596761,0.76040993539087687,0.89990697213414195],"mode":"lines","line":{"color":"steelblue","shape":"hv"},"showlegend":false,"legendgroup":"1","text":["Lower: (95, 0)","Lower: (120, 0)","Lower: (150, 0)","Lower: (200, 0.016)","Lower: (280, 0.123)","Lower: (310, 0.24)","Lower: (370, 0.363)","Lower: (430, 0.491)","Lower: (480, 0.624)","Lower: (490, 0.76)","Lower: (560, 0.9)"],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text"],"marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(70,130,180,0.2)","type":"scatter","x":[95,120,150,200,280,310,370,430,480,490,560],"y":[0.59199279690801077,0.95436152973987098,1.278951440445703,1.5839855938160214,1.8765225405765813,2.1601823352710618,2.4371154563472452,2.708723059479742,2.9759783907240323,3.2395900646091227,3.5000930278658577],"mode":"lines","fill":"tonexty","line":{"color":"steelblue","shape":"hv"},"showlegend":false,"legendgroup":"1","text":["Upper: (95, 0.592)","Upper: (120, 0.954)","Upper: (150, 1.279)","Upper: (200, 1.584)","Upper: (280, 1.877)","Upper: (310, 2.16)","Upper: (370, 2.437)","Upper: (430, 2.709)","Upper: (480, 2.976)","Upper: (490, 3.24)","Upper: (560, 3.5)"],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text"],"name":"rgba(70,130,180,0.2)","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"xaxis":"x","yaxis":"y","frame":null},{"type":"scatter","x":[90,180,260,310,420,530],"y":[0.33333333333333331,0.66666666666666663,1,1.3333333333333333,1.6666666666666665,1.9999999999999998],"mode":"lines","line":{"color":"tomato","shape":"hv"},"showlegend":true,"legendgroup":"2","name":"MCF 2","text":["MCF: (90, 0.333)","MCF: (180, 0.667)","MCF: (260, 1)","MCF: (310, 1.333)","MCF: (420, 1.667)","MCF: (530, 2)"],"hoverinfo":["text","text","text","text","text","text"],"marker":{"color":"rgba(214,39,40,1)","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"xaxis":"x","yaxis":"y","frame":null},{"type":"scatter","x":[90,180,260,310,420,530],"y":[0,0,0,0.026690676973297522,0.20579576570569769,0.39969610788156351],"mode":"lines","line":{"color":"tomato","shape":"hv"},"showlegend":false,"legendgroup":"2","text":["Lower: (90, 0)","Lower: (180, 0)","Lower: (260, 0)","Lower: (310, 0.027)","Lower: (420, 0.206)","Lower: (530, 0.4)"],"hoverinfo":["text","text","text","text","text","text"],"marker":{"color":"rgba(148,103,189,1)","line":{"color":"rgba(148,103,189,1)"}},"error_y":{"color":"rgba(148,103,189,1)"},"error_x":{"color":"rgba(148,103,189,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(255,99,71,0.2)","type":"scatter","x":[90,180,260,310,420,530],"y":[0.98665466151335113,1.5906025495664515,2.1315857340761717,2.6399759896933688,3.1275375676276354,3.6003038921184363],"mode":"lines","fill":"tonexty","line":{"color":"tomato","shape":"hv"},"showlegend":false,"legendgroup":"2","text":["Upper: (90, 0.987)","Upper: (180, 1.591)","Upper: (260, 2.132)","Upper: (310, 2.64)","Upper: (420, 3.128)","Upper: (530, 3.6)"],"hoverinfo":["text","text","text","text","text","text"],"name":"rgba(255,99,71,0.2)","marker":{"color":"rgba(140,86,75,1)","line":{"color":"rgba(140,86,75,1)"}},"error_y":{"color":"rgba(140,86,75,1)"},"error_x":{"color":"rgba(140,86,75,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+</div>
+<div id="see-also" class="section level2">
+<h2>See Also</h2>
+<ul>
+<li><a href="weibull.html">Life Data Analysis</a> — fit
+Weibull/lognormal models to non-repairable failure-time data</li>
+<li><a href="rga.html">Reliability Growth Analysis</a> — track
+cumulative failures over development test time</li>
+<li><a href="alt.html">Accelerated Life Testing</a> — extrapolate life
+from accelerated stress conditions</li>
+</ul>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Crow1974" class="csl-entry">
+Crow, Larry H. 1974. <span>“Reliability Analysis for Complex Repairable
+Systems.”</span> In <em>Reliability and Biometry: Statistical Analysis
+of Lifelength</em>, edited by F. Proschan and R. J. Serfling. SIAM.
+</div>
+<div id="ref-Nelson2003" class="csl-entry">
+Nelson, Wayne B. 2003. <em>Recurrent Events Data Analysis for Product
+Repairs, Disease Recurrences, and Other Applications</em>. ASA-SIAM.
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,3 +1,16 @@
+# ReliaPlotR 0.7
+
+## New features
+* New `tidy_wblr()` function extracts parameter estimates, goodness-of-fit metrics, and confidence bounds from fitted `wblr` objects as tidy data frames.
+* New `tidy_rga()` function extracts fitted cumulative failure counts, confidence bounds, and Crow-AMSAA model coefficients from `rga` objects.
+* New `tidy_alt()` function extracts per-stress-level parameter estimates and life-stress relationship coefficients from fitted `alt` objects.
+* New `reliapltr_mcp_server()` exposes five MCP tools for use with Claude Code and Claude Desktop (requires `mcptools` and `ellmer`): `fit_weibull`, `fit_alt`, `plot_weibull`, `plot_alt`, and `plot_rga`.
+* New `inst/mcp/server.R` launcher script for easy MCP server registration.
+* New vignette "MCP Tools" covers registering the server and using the tools.
+* New package logo (hex sticker) in `man/figures/logo.png`.
+* All four vignettes now include a **Statistical Background** section with equations, parameter interpretation, and references.
+* New `inst/REFERENCES.bib` with BibTeX entries for foundational reliability engineering references.
+
 # ReliaPlotR 0.6
 
 ## Minor improvements and bug fixes
